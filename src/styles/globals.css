@@ -17,11 +17,14 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: black;
+  background: white;
+}
+
+.box:hover {
+  border: solid 2px blue;
+}
+
+#container .box.active {
+  border: 2px solid blue;
 }
