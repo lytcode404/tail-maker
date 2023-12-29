@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }) {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden bg-white">
       <Component {...pageProps} />
     </div>
   );
