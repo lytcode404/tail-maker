@@ -12,6 +12,7 @@ const AllComps = ({ searchText }) => {
   const [isShowCodeClicked, setIsShowCodeClicked] = useState(false);
   const [isCodeChanged, setIsCodeChanged] = useState(false);
   const [selectedCodeIndex, setSelectedCodeIndex] = useState(null);
+  const [filteredComps, setFilteredComps] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,8 +23,8 @@ const AllComps = ({ searchText }) => {
           id: doc.id,
           ...doc.data(),
         }));
-        // console.log(compData[0].comp);
         setAllComps(compData);
+        setFilteredComps(compData);
       } catch (error) {
         console.error("Error fetching data: ", error);
         toast.error("Error fetching data. Please try again.");
@@ -32,6 +33,18 @@ const AllComps = ({ searchText }) => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const filterComps = allComps.filter((comp) => {
+      const searchTerm = comp.compTags;
+      return searchTerm.toLowerCase().includes(searchText.toLowerCase());
+    });
+    if (searchText !== "" && filterComps && filterComps.length > 0) {
+      setFilteredComps(filterComps);
+    } else {
+      setFilteredComps(allComps);
+    }
+  }, [searchText]);
 
   const handleUpdateCode = async (id, i) => {
     setIsCodeChanged(false);
@@ -56,26 +69,13 @@ const AllComps = ({ searchText }) => {
     });
   };
 
-  if (!allComps.length) {
+  if (!filteredComps.length) {
     return "loading...";
   }
 
-  // const [filterComps, setFilterComps] = useState({});
-  // useEffect(() => {
-  //   const filteredKeys = Object.keys(comps).filter((comp) =>
-  //     comp.toLowerCase().includes(searchText.toLowerCase())
-  //   );
-
-  //   const filteredComps = Object.fromEntries(
-  //     filteredKeys.map((key) => [key, comps[key]])
-  //   );
-
-  //   setFilterComps(filteredComps);
-  // }, [searchText]);
-
   return (
     <div className="pt-40">
-      {allComps.map((comp, i) => {
+      {filteredComps.map((comp, i) => {
         return (
           <div key={i} className={`grid grid-cols-1`}>
             <div
