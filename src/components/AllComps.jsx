@@ -62,7 +62,7 @@ const AllComps = ({ searchText }) => {
 
   const handleChangeCode = (i, value) => {
     setIsCodeChanged(true);
-    setAllComps((prev) => {
+    setFilteredComps((prev) => {
       const updatedComps = [...prev];
       updatedComps[i].comp = value;
       return updatedComps;
