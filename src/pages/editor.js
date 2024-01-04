@@ -104,9 +104,16 @@ const UIEditor = () => {
     return "loading...";
   }
   return (
-    <div className="grid grid-cols-2">
+    <div className="grid grid-cols-1">
+      <div className="h-[50vh] overflow-y-auto">
+        <LiveProvider code={code}>
+          {/* <LiveEditor onChange={handlChangecode} /> */}
+          <LiveError />
+          <LivePreview />
+        </LiveProvider>
+      </div>
       <Editor
-        height="100vh"
+        height="50vh"
         defaultLanguage="javascript"
         defaultValue={code}
         theme="vs-dark"
@@ -120,11 +127,6 @@ const UIEditor = () => {
         }}
         onChange={handlChangecode}
       />
-      <LiveProvider code={code}>
-        {/* <LiveEditor onChange={handlChangecode} /> */}
-        <LiveError />
-        <LivePreview />
-      </LiveProvider>
     </div>
   );
 };
